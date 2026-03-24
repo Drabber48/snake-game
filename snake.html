@@ -6420,10 +6420,7 @@ function renderDailyChallenges() {
       item.className = 'achievement-item' + (isCompleted ? ' unlocked' : '');
 
       let progressText = '';
-      if (challenge.type === 'score' || challenge.type === 'score_exact' ||
-          challenge.type === 'score_even' || challenge.type === 'score_odd') {
-        progressText = `Best: ${stats.maxScore}/${challenge.target}`;
-      } else if (challenge.type === 'games') {
+      if (challenge.type === 'games') {
         progressText = `${progress}/${challenge.target}`;
       } else if (challenge.type === 'daily_gems') {
         progressText = `${dailyGemsCollected}/${challenge.target}`;
@@ -6438,7 +6435,7 @@ function renderDailyChallenges() {
         <div class="achievement-info">
           <div class="achievement-name">${challenge.name} ${isCompleted ? '✓' : ''}</div>
           <div class="achievement-desc">${challenge.desc}</div>
-          <div class="achievement-progress">${progressText} - ${challenge.reward} 💎</div>
+          <div class="achievement-progress">${progressText}${progressText ? ' - ' : ''}${challenge.reward} 💎</div>
         </div>
       `;
 
