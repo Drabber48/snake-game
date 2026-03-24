@@ -6100,17 +6100,17 @@ let stats = JSON.parse(localStorage.getItem('snakeStats')) || {
 
 // Daily Challenges System
 const DAILY_CHALLENGES = [
-  // Score Challenges (1-10)
-  { id: 'score_10', name: 'Warm Up', desc: 'Score 10 points', icon: '🍎', type: 'score', target: 10, reward: 15 },
-  { id: 'score_25', name: 'Getting Started', desc: 'Score 25 points', icon: '🍏', type: 'score', target: 25, reward: 25 },
-  { id: 'score_50', name: 'Half Century', desc: 'Score 50 points', icon: '🎯', type: 'score', target: 50, reward: 40 },
-  { id: 'score_75', name: 'On A Roll', desc: 'Score 75 points', icon: '🔥', type: 'score', target: 75, reward: 55 },
-  { id: 'score_100', name: 'Century', desc: 'Score 100 points', icon: '💯', type: 'score', target: 100, reward: 75 },
-  { id: 'score_150', name: 'Snake Master', desc: 'Score 150 points', icon: '👑', type: 'score', target: 150, reward: 100 },
-  { id: 'score_200', name: 'Legendary', desc: 'Score 200 points', icon: '🌟', type: 'score', target: 200, reward: 125 },
-  { id: 'score_exact_15', name: 'Lucky 15', desc: 'Get exactly 15 points', icon: '🎲', type: 'score_exact', target: 15, reward: 35 },
-  { id: 'score_even_50', name: 'Even Steven', desc: 'Get an even score over 50', icon: '➗', type: 'score_even', target: 50, reward: 35 },
-  { id: 'score_odd_50', name: 'Odd Ball', desc: 'Get an odd score over 50', icon: '🎰', type: 'score_odd', target: 50, reward: 35 },
+  // Score Challenges (1-10) - Normal Mode Only
+  { id: 'score_10', name: 'Warm Up', desc: 'Score 10 points (Normal mode)', icon: '🍎', type: 'score', target: 10, reward: 15 },
+  { id: 'score_25', name: 'Getting Started', desc: 'Score 25 points (Normal mode)', icon: '🍏', type: 'score', target: 25, reward: 25 },
+  { id: 'score_50', name: 'Half Century', desc: 'Score 50 points (Normal mode)', icon: '🎯', type: 'score', target: 50, reward: 40 },
+  { id: 'score_75', name: 'On A Roll', desc: 'Score 75 points (Normal mode)', icon: '🔥', type: 'score', target: 75, reward: 55 },
+  { id: 'score_100', name: 'Century', desc: 'Score 100 points (Normal mode)', icon: '💯', type: 'score', target: 100, reward: 75 },
+  { id: 'score_150', name: 'Snake Master', desc: 'Score 150 points (Normal mode)', icon: '👑', type: 'score', target: 150, reward: 100 },
+  { id: 'score_200', name: 'Legendary', desc: 'Score 200 points (Normal mode)', icon: '🌟', type: 'score', target: 200, reward: 125 },
+  { id: 'score_exact_15', name: 'Lucky 15', desc: 'Get exactly 15 points (Normal mode)', icon: '🎲', type: 'score_exact', target: 15, reward: 35 },
+  { id: 'score_even_50', name: 'Even Steven', desc: 'Get an even score over 50 (Normal mode)', icon: '➗', type: 'score_even', target: 50, reward: 35 },
+  { id: 'score_odd_50', name: 'Odd Ball', desc: 'Get an odd score over 50 (Normal mode)', icon: '🎰', type: 'score_odd', target: 50, reward: 35 },
 
   // Games Played (11-15)
   { id: 'games_1', name: 'First Game', desc: 'Play 1 game', icon: '🎮', type: 'games', target: 1, reward: 15 },
@@ -6264,16 +6264,16 @@ function updateDailyChallenge(type, value, extraData = {}) {
 
       switch(type) {
         case 'score':
-          if (value >= challenge.target) completed = true;
+          if (gameMode === 'normal' && value >= challenge.target) completed = true;
           break;
         case 'score_exact':
-          if (value === challenge.target) completed = true;
+          if (gameMode === 'normal' && value === challenge.target) completed = true;
           break;
         case 'score_even':
-          if (value > challenge.target && value % 2 === 0) completed = true;
+          if (gameMode === 'normal' && value > challenge.target && value % 2 === 0) completed = true;
           break;
         case 'score_odd':
-          if (value > challenge.target && value % 2 === 1) completed = true;
+          if (gameMode === 'normal' && value > challenge.target && value % 2 === 1) completed = true;
           break;
         case 'games':
           dailyChallengeState.progress[challengeId] = (dailyChallengeState.progress[challengeId] || 0) + value;
