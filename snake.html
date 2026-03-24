@@ -6101,70 +6101,70 @@ let stats = JSON.parse(localStorage.getItem('snakeStats')) || {
 // Daily Challenges System
 const DAILY_CHALLENGES = [
   // Score Challenges (1-10)
-  { id: 'score_10', name: 'Warm Up', desc: 'Score 10 points', icon: '🍎', type: 'score', target: 10, reward: 5 },
-  { id: 'score_25', name: 'Getting Started', desc: 'Score 25 points', icon: '🍏', type: 'score', target: 25, reward: 10 },
-  { id: 'score_50', name: 'Half Century', desc: 'Score 50 points', icon: '🎯', type: 'score', target: 50, reward: 15 },
-  { id: 'score_75', name: 'On A Roll', desc: 'Score 75 points', icon: '🔥', type: 'score', target: 75, reward: 20 },
-  { id: 'score_100', name: 'Century', desc: 'Score 100 points', icon: '💯', type: 'score', target: 100, reward: 30 },
-  { id: 'score_150', name: 'Snake Master', desc: 'Score 150 points', icon: '👑', type: 'score', target: 150, reward: 40 },
-  { id: 'score_200', name: 'Legendary', desc: 'Score 200 points', icon: '🌟', type: 'score', target: 200, reward: 50 },
-  { id: 'score_exact_15', name: 'Lucky 15', desc: 'Get exactly 15 points', icon: '🎲', type: 'score_exact', target: 15, reward: 15 },
-  { id: 'score_even_50', name: 'Even Steven', desc: 'Get an even score over 50', icon: '➗', type: 'score_even', target: 50, reward: 15 },
-  { id: 'score_odd_50', name: 'Odd Ball', desc: 'Get an odd score over 50', icon: '🎰', type: 'score_odd', target: 50, reward: 15 },
-  
+  { id: 'score_10', name: 'Warm Up', desc: 'Score 10 points', icon: '🍎', type: 'score', target: 10, reward: 15 },
+  { id: 'score_25', name: 'Getting Started', desc: 'Score 25 points', icon: '🍏', type: 'score', target: 25, reward: 25 },
+  { id: 'score_50', name: 'Half Century', desc: 'Score 50 points', icon: '🎯', type: 'score', target: 50, reward: 40 },
+  { id: 'score_75', name: 'On A Roll', desc: 'Score 75 points', icon: '🔥', type: 'score', target: 75, reward: 55 },
+  { id: 'score_100', name: 'Century', desc: 'Score 100 points', icon: '💯', type: 'score', target: 100, reward: 75 },
+  { id: 'score_150', name: 'Snake Master', desc: 'Score 150 points', icon: '👑', type: 'score', target: 150, reward: 100 },
+  { id: 'score_200', name: 'Legendary', desc: 'Score 200 points', icon: '🌟', type: 'score', target: 200, reward: 125 },
+  { id: 'score_exact_15', name: 'Lucky 15', desc: 'Get exactly 15 points', icon: '🎲', type: 'score_exact', target: 15, reward: 35 },
+  { id: 'score_even_50', name: 'Even Steven', desc: 'Get an even score over 50', icon: '➗', type: 'score_even', target: 50, reward: 35 },
+  { id: 'score_odd_50', name: 'Odd Ball', desc: 'Get an odd score over 50', icon: '🎰', type: 'score_odd', target: 50, reward: 35 },
+
   // Games Played (11-15)
-  { id: 'games_1', name: 'First Game', desc: 'Play 1 game', icon: '🎮', type: 'games', target: 1, reward: 5 },
-  { id: 'games_3', name: 'Getting Addicted', desc: 'Play 3 games', icon: '🕹️', type: 'games', target: 3, reward: 10 },
-  { id: 'games_5', name: 'Dedicated', desc: 'Play 5 games', icon: '⌨️', type: 'games', target: 5, reward: 15 },
-  { id: 'games_10', name: 'Marathon Session', desc: 'Play 10 games', icon: '🏃', type: 'games', target: 10, reward: 25 },
-  { id: 'games_25', name: 'True Fan', desc: 'Play 25 games', icon: '💪', type: 'games', target: 25, reward: 40 },
-  
+  { id: 'games_1', name: 'First Game', desc: 'Play 1 game', icon: '🎮', type: 'games', target: 1, reward: 15 },
+  { id: 'games_3', name: 'Getting Addicted', desc: 'Play 3 games', icon: '🕹️', type: 'games', target: 3, reward: 30 },
+  { id: 'games_5', name: 'Dedicated', desc: 'Play 5 games', icon: '⌨️', type: 'games', target: 5, reward: 45 },
+  { id: 'games_10', name: 'Marathon Session', desc: 'Play 10 games', icon: '🏃', type: 'games', target: 10, reward: 70 },
+  { id: 'games_25', name: 'True Fan', desc: 'Play 25 games', icon: '💪', type: 'games', target: 25, reward: 100 },
+
   // Apples Eaten (16-20)
-  { id: 'apples_10', name: 'Snack Time', desc: 'Eat 10 apples total', icon: '🍎', type: 'apples', target: 10, reward: 5 },
-  { id: 'apples_25', name: 'Fruit Lover', desc: 'Eat 25 apples total', icon: '🍏', type: 'apples', target: 25, reward: 10 },
-  { id: 'apples_50', name: 'Orchard', desc: 'Eat 50 apples total', icon: '🌳', type: 'apples', target: 50, reward: 20 },
-  { id: 'apples_100', name: 'Apple Hoarder', desc: 'Eat 100 apples total', icon: '📦', type: 'apples', target: 100, reward: 30 },
-  { id: 'apples_200', name: 'Apple Legend', desc: 'Eat 200 apples total', icon: '🏆', type: 'apples', target: 200, reward: 50 },
-  
+  { id: 'apples_10', name: 'Snack Time', desc: 'Eat 10 apples total', icon: '🍎', type: 'apples', target: 10, reward: 15 },
+  { id: 'apples_25', name: 'Fruit Lover', desc: 'Eat 25 apples total', icon: '🍏', type: 'apples', target: 25, reward: 30 },
+  { id: 'apples_50', name: 'Orchard', desc: 'Eat 50 apples total', icon: '🌳', type: 'apples', target: 50, reward: 50 },
+  { id: 'apples_100', name: 'Apple Hoarder', desc: 'Eat 100 apples total', icon: '📦', type: 'apples', target: 100, reward: 80 },
+  { id: 'apples_200', name: 'Apple Legend', desc: 'Eat 200 apples total', icon: '🏆', type: 'apples', target: 200, reward: 120 },
+
   // Difficulty Specific (21-25)
-  { id: 'diff_easy', name: 'Easy Does It', desc: 'Play a game on Easy', icon: '😊', type: 'difficulty', target: 'easy', reward: 5 },
-  { id: 'diff_medium', name: 'Not So Easy', desc: 'Play a game on Medium', icon: '😐', type: 'difficulty', target: 'medium', reward: 15 },
-  { id: 'diff_hard', name: 'Hardcore', desc: 'Play a game on Hard', icon: '😤', type: 'difficulty', target: 'hard', reward: 25 },
-  { id: 'score_easy_30', name: 'Easy Win', desc: 'Score 30+ on Easy', icon: '🟢', type: 'score_difficulty', target: 30, difficulty: 'easy', reward: 15 },
-  { id: 'score_medium_50', name: 'Medium Master', desc: 'Score 50+ on Medium', icon: '🟡', type: 'score_difficulty', target: 50, difficulty: 'medium', reward: 25 },
-  
+  { id: 'diff_easy', name: 'Easy Does It', desc: 'Play a game on Easy', icon: '😊', type: 'difficulty', target: 'easy', reward: 15 },
+  { id: 'diff_medium', name: 'Not So Easy', desc: 'Play a game on Medium', icon: '😐', type: 'difficulty', target: 'medium', reward: 40 },
+  { id: 'diff_hard', name: 'Hardcore', desc: 'Play a game on Hard', icon: '😤', type: 'difficulty', target: 'hard', reward: 65 },
+  { id: 'score_easy_30', name: 'Easy Win', desc: 'Score 30+ on Easy', icon: '🟢', type: 'score_difficulty', target: 30, difficulty: 'easy', reward: 40 },
+  { id: 'score_medium_50', name: 'Medium Master', desc: 'Score 50+ on Medium', icon: '🟡', type: 'score_difficulty', target: 50, difficulty: 'medium', reward: 65 },
+
   // Ultra Mode (26-30)
-  { id: 'ultra_play', name: 'Ultra Explorer', desc: 'Play Ultra mode', icon: '⚡', type: 'ultra_play', target: 1, reward: 10 },
-  { id: 'ultra_50', name: 'Ultra Starter', desc: 'Eat 50 apples in Ultra', icon: '🔷', type: 'ultra_apples', target: 50, reward: 20 },
-  { id: 'ultra_100', name: 'Ultra Dedicated', desc: 'Eat 100 apples in Ultra', icon: '🔶', type: 'ultra_apples', target: 100, reward: 35 },
-  { id: 'ultra_200', name: 'Ultra Warrior', desc: 'Eat 200 apples in Ultra', icon: '💠', type: 'ultra_apples', target: 200, reward: 50 },
-  { id: 'ultra_win', name: 'Ultra Champion', desc: 'Complete Ultra mode', icon: '👑', type: 'ultra_win', target: 1, reward: 100 },
-  
+  { id: 'ultra_play', name: 'Ultra Explorer', desc: 'Play Ultra mode', icon: '⚡', type: 'ultra_play', target: 1, reward: 30 },
+  { id: 'ultra_50', name: 'Ultra Starter', desc: 'Eat 50 apples in Ultra', icon: '🔷', type: 'ultra_apples', target: 50, reward: 55 },
+  { id: 'ultra_100', name: 'Ultra Dedicated', desc: 'Eat 100 apples in Ultra', icon: '🔶', type: 'ultra_apples', target: 100, reward: 90 },
+  { id: 'ultra_200', name: 'Ultra Warrior', desc: 'Eat 200 apples in Ultra', icon: '💠', type: 'ultra_apples', target: 200, reward: 125 },
+  { id: 'ultra_win', name: 'Ultra Champion', desc: 'Complete Ultra mode', icon: '👑', type: 'ultra_win', target: 1, reward: 250 },
+
   // Gems & Themes (31-35)
-  { id: 'gems_50', name: 'Gem Collector', desc: 'Collect 50 gems in one day', icon: '💎', type: 'daily_gems', target: 50, reward: 10 },
-  { id: 'gems_100', name: 'Gem Master', desc: 'Collect 100 gems in one day', icon: '💍', type: 'daily_gems', target: 100, reward: 25 },
-  { id: 'theme_unlock', name: 'Fashion Statement', desc: 'Unlock a new theme', icon: '🎨', type: 'theme_unlock', target: 1, reward: 15 },
-  { id: 'total_gems_500', name: 'Wealthy', desc: 'Have 500+ total gems', icon: '💰', type: 'total_gems', target: 500, reward: 20 },
-  { id: 'total_gems_1000', name: 'Rich', desc: 'Have 1000+ total gems', icon: '🤑', type: 'total_gems', target: 1000, reward: 40 },
-  
+  { id: 'gems_50', name: 'Gem Collector', desc: 'Collect 50 gems in one day', icon: '💎', type: 'daily_gems', target: 50, reward: 30 },
+  { id: 'gems_100', name: 'Gem Master', desc: 'Collect 100 gems in one day', icon: '💍', type: 'daily_gems', target: 100, reward: 65 },
+  { id: 'theme_unlock', name: 'Fashion Statement', desc: 'Unlock a new theme', icon: '🎨', type: 'theme_unlock', target: 1, reward: 40 },
+  { id: 'total_gems_500', name: 'Wealthy', desc: 'Have 500+ total gems', icon: '💰', type: 'total_gems', target: 500, reward: 55 },
+  { id: 'total_gems_1000', name: 'Rich', desc: 'Have 1000+ total gems', icon: '🤑', type: 'total_gems', target: 1000, reward: 100 },
+
   // Streak & Consistency (36-40)
-  { id: 'streak_2', name: 'Getting Serious', desc: 'Play 2 days in a row', icon: '📅', type: 'streak', target: 2, reward: 15 },
-  { id: 'streak_3', name: 'On Fire', desc: 'Play 3 days in a row', icon: '🔥', type: 'streak', target: 3, reward: 25 },
-  { id: 'streak_5', name: 'Dedicated Player', desc: 'Play 5 days in a row', icon: '⭐', type: 'streak', target: 5, reward: 40 },
-  { id: 'streak_7', name: 'Week Warrior', desc: 'Play 7 days in a row', icon: '📆', type: 'streak', target: 7, reward: 60 },
-  { id: 'streak_14', name: 'Fortnight Fan', desc: 'Play 14 days in a row', icon: '🏅', type: 'streak', target: 14, reward: 100 },
-  
+  { id: 'streak_2', name: 'Getting Serious', desc: 'Play 2 days in a row', icon: '📅', type: 'streak', target: 2, reward: 40 },
+  { id: 'streak_3', name: 'On Fire', desc: 'Play 3 days in a row', icon: '🔥', type: 'streak', target: 3, reward: 65 },
+  { id: 'streak_5', name: 'Dedicated Player', desc: 'Play 5 days in a row', icon: '⭐', type: 'streak', target: 5, reward: 100 },
+  { id: 'streak_7', name: 'Week Warrior', desc: 'Play 7 days in a row', icon: '📆', type: 'streak', target: 7, reward: 150 },
+  { id: 'streak_14', name: 'Fortnight Fan', desc: 'Play 14 days in a row', icon: '🏅', type: 'streak', target: 14, reward: 250 },
+
   // Special Challenges (41-50)
-  { id: 'win_game', name: 'Victory!', desc: 'Win a game (Ultra mode)', icon: '🏆', type: 'win', target: 1, reward: 50 },
-  { id: 'exact_20', name: 'Perfect 20', desc: 'Get exactly 20 points', icon: '🎯', type: 'score_exact', target: 20, reward: 15 },
-  { id: 'survive_2min', name: 'Survivor', desc: 'Survive for 2 minutes', icon: '⏱️', type: 'survive_time', target: 120, reward: 25 },
-  { id: 'gems_single_5', name: 'Gem Rush', desc: 'Collect 5 gems in one game', icon: '💎', type: 'single_game_gems', target: 5, reward: 10 },
-  { id: 'gems_single_10', name: 'Gem Frenzy', desc: 'Collect 10 gems in one game', icon: '💎💎', type: 'single_game_gems', target: 10, reward: 20 },
-  { id: 'all_modes', name: 'Variety Pack', desc: 'Play all game modes today', icon: '🎭', type: 'all_modes', target: 1, reward: 30 },
-  { id: 'use_code', name: 'Code Breaker', desc: 'Use a redeem code', icon: '🔑', type: 'use_code', target: 1, reward: 10 },
-  { id: 'view_achievements', name: 'Achievement Hunter', desc: 'Open achievements menu', icon: '📋', type: 'view_achievements', target: 1, reward: 5 },
-  { id: 'browse_themes', name: 'Window Shopping', desc: 'Browse all themes', icon: '👀', type: 'browse_themes', target: 1, reward: 5 },
-  { id: 'change_theme', name: 'New Look', desc: 'Change your theme', icon: '🔄', type: 'change_theme', target: 1, reward: 5 }
+  { id: 'win_game', name: 'Victory!', desc: 'Win a game (Ultra mode)', icon: '🏆', type: 'win', target: 1, reward: 125 },
+  { id: 'exact_20', name: 'Perfect 20', desc: 'Get exactly 20 points', icon: '🎯', type: 'score_exact', target: 20, reward: 40 },
+  { id: 'survive_2min', name: 'Survivor', desc: 'Survive for 2 minutes', icon: '⏱️', type: 'survive_time', target: 120, reward: 65 },
+  { id: 'gems_single_5', name: 'Gem Rush', desc: 'Collect 5 gems in one game', icon: '💎', type: 'single_game_gems', target: 5, reward: 30 },
+  { id: 'gems_single_10', name: 'Gem Frenzy', desc: 'Collect 10 gems in one game', icon: '💎💎', type: 'single_game_gems', target: 10, reward: 55 },
+  { id: 'all_modes', name: 'Variety Pack', desc: 'Play all game modes today', icon: '🎭', type: 'all_modes', target: 1, reward: 75 },
+  { id: 'use_code', name: 'Code Breaker', desc: 'Use a redeem code', icon: '🔑', type: 'use_code', target: 1, reward: 30 },
+  { id: 'view_achievements', name: 'Achievement Hunter', desc: 'Open achievements menu', icon: '📋', type: 'view_achievements', target: 1, reward: 15 },
+  { id: 'browse_themes', name: 'Window Shopping', desc: 'Browse all themes', icon: '👀', type: 'browse_themes', target: 1, reward: 15 },
+  { id: 'change_theme', name: 'New Look', desc: 'Change your theme', icon: '🔄', type: 'change_theme', target: 1, reward: 15 }
 ];
 
 // Daily Challenges State
