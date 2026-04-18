@@ -7280,6 +7280,16 @@ function placeFood() {
       }
     }
   }
+  else {
+    // Time Attack and other modes - spawn single apple like normal
+    let valid = false;
+    while (!valid) {
+      let tempX = Math.floor(Math.random() * GRID_SIZE);
+      let tempY = Math.floor(Math.random() * GRID_SIZE);
+      valid = !snake.some(s => s.x === tempX && s.y === tempY);
+      if (valid) foods.push({ x: tempX, y: tempY, color: colors.apple, pulse: 0 });
+    }
+  }
 }
 
 function placeSingleFood() {
