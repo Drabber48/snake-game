@@ -702,7 +702,7 @@ body.retro-theme .preview-item {
           <option value="ultra">🍎 Ultra - 10,000 💎</option>
           <option value="quintuple">🍎×5 Five Apple - 2,500 💎</option>
           <option value="triple">🍎🍎🍎 Triple Apple - 1,000 💎</option>
-          <option value="timeattack">⏱️ Time Attack - 750 💎</option>
+          <option value="timeattack">⏱️ Time Attack - 1,000,000 💎</option>
         </select>
       </div>
 
@@ -5758,7 +5758,7 @@ let unlockedThemes = JSON.parse(localStorage.getItem('snakeUnlockedThemes')) || 
 const THEME_COST = 10;
 const GEM_REWARDS = { easy: 1, medium: 2, hard: 3 };
 const GEM_REWARDS_ULTRA = { easy: 5, medium: 10, hard: 15 };
-const GEM_REWARDS_TIMEATTACK = { easy: 2, medium: 3, hard: 4 };
+const GEM_REWARDS_TIMEATTACK = { easy: 2, medium: 4, hard: 6 };
 
 // Difficulty Unlock System
 let unlockedDifficulties = JSON.parse(localStorage.getItem('snakeUnlockedDifficulties')) || ['easy'];
@@ -5766,7 +5766,7 @@ const DIFFICULTY_COSTS = { medium: 50, hard: 250 };
 
 // Game Mode Unlock System
 let unlockedModes = JSON.parse(localStorage.getItem('snakeUnlockedModes')) || ['normal'];
-const MODE_COSTS = { ultra: 10000, quintuple: 2500, triple: 1000, timeattack: 750 };
+const MODE_COSTS = { ultra: 10000, quintuple: 2500, triple: 1000, timeattack: 1000000 };
 
 let currentDifficulty = localStorage.getItem('snakeDifficulty') || 'easy';
 
