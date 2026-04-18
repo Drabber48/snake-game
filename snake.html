@@ -668,6 +668,7 @@ body.retro-theme .preview-item {
 <div class="main-container">
   <div class="ui-layer">
     <div id="scoreEl">Score: 0</div>
+    <div id="timeAttackEl" style="display: none; color: #ff6b6b;">⏱️ 60</div>
     <div id="highScoreEl">Best: 0</div>
   </div>
 
@@ -701,6 +702,7 @@ body.retro-theme .preview-item {
           <option value="ultra">🍎 Ultra - 10,000 💎</option>
           <option value="quintuple">🍎×5 Five Apple - 2,500 💎</option>
           <option value="triple">🍎🍎🍎 Triple Apple - 1,000 💎</option>
+          <option value="timeattack">⏱️ Time Attack - 750 💎</option>
         </select>
       </div>
 
@@ -5676,6 +5678,7 @@ const wrapper = document.getElementById("wrapper");
 // UI Elements
 const els = {
   score: document.getElementById("scoreEl"),
+  timeAttack: document.getElementById("timeAttackEl"),
   highScore: document.getElementById("highScoreEl"),
   finalScore: document.getElementById("finalScoreEl"),
   winScore: document.getElementById("winScoreEl"),
@@ -5706,6 +5709,7 @@ let particles = [];
 let direction = { x: 0, y: 0 };
 let nextDirection = { x: 0, y: 0 };
 let score = 0;
+let timeAttackTimer = 60;
 let lastTime = 0;
 let dropCounter = 0;
 let gameState = 'start';
@@ -5740,6 +5744,12 @@ let hsQuintuple = {
   hard: parseInt(localStorage.getItem('snakeHS_Quintuple_hard')) || 0
 };
 
+let hsTimeAttack = {
+  easy: parseInt(localStorage.getItem('snakeHS_TimeAttack_easy')) || 0,
+  medium: parseInt(localStorage.getItem('snakeHS_TimeAttack_medium')) || 0,
+  hard: parseInt(localStorage.getItem('snakeHS_TimeAttack_hard')) || 0
+};
+
 let gameMode = localStorage.getItem('snakeGameMode') || 'normal';
 
 // Gem System
@@ -5748,6 +5758,7 @@ let unlockedThemes = JSON.parse(localStorage.getItem('snakeUnlockedThemes')) || 
 const THEME_COST = 10;
 const GEM_REWARDS = { easy: 1, medium: 2, hard: 3 };
 const GEM_REWARDS_ULTRA = { easy: 5, medium: 10, hard: 15 };
+const GEM_REWARDS_TIMEATTACK = { easy: 2, medium: 3, hard: 4 };
 
 // Difficulty Unlock System
 let unlockedDifficulties = JSON.parse(localStorage.getItem('snakeUnlockedDifficulties')) || ['easy'];
@@ -5755,7 +5766,7 @@ const DIFFICULTY_COSTS = { medium: 50, hard: 250 };
 
 // Game Mode Unlock System
 let unlockedModes = JSON.parse(localStorage.getItem('snakeUnlockedModes')) || ['normal'];
-const MODE_COSTS = { ultra: 10000, quintuple: 2500, triple: 1000 };
+const MODE_COSTS = { ultra: 10000, quintuple: 2500, triple: 1000, timeattack: 750 };
 
 let currentDifficulty = localStorage.getItem('snakeDifficulty') || 'easy';
 
@@ -6095,7 +6106,8 @@ let stats = JSON.parse(localStorage.getItem('snakeStats')) || {
   mediumUnlocked: false,
   hardUnlocked: false,
   hardMaxScore: 0,
-  hasScoredExactly77: false
+  hasScoredExactly77: false,
+  timeAttackBest: 0
 };
 
 // Daily Challenges System
@@ -6140,7 +6152,14 @@ const DAILY_CHALLENGES = [
   { id: 'ultra_200', name: 'Ultra Warrior', desc: 'Eat 200 apples in Ultra', icon: '💠', type: 'ultra_apples', target: 200, reward: 125 },
   { id: 'ultra_win', name: 'Ultra Champion', desc: 'Complete Ultra mode', icon: '👑', type: 'ultra_win', target: 1, reward: 250 },
 
-  // Gems & Themes (31-35)
+  // Time Attack Mode (31-35)
+  { id: 'timeattack_play', name: 'Time Attack!', desc: 'Play Time Attack mode', icon: '⏱️', type: 'timeattack_play', target: 1, reward: 30 },
+  { id: 'timeattack_10', name: 'Quick Eater', desc: 'Eat 10 apples in Time Attack', icon: '⚡', type: 'timeattack_apples', target: 10, reward: 40 },
+  { id: 'timeattack_25', name: 'Speed Demon', desc: 'Eat 25 apples in Time Attack', icon: '🚀', type: 'timeattack_apples', target: 25, reward: 65 },
+  { id: 'timeattack_score_30', name: 'Time Attack Pro', desc: 'Score 30+ in Time Attack', icon: '🏃', type: 'timeattack_score', target: 30, reward: 80 },
+  { id: 'timeattack_score_50', name: 'Time Attack Master', desc: 'Score 50+ in Time Attack', icon: '🌟', type: 'timeattack_score', target: 50, reward: 120 },
+
+  // Gems & Themes (36-40)
   { id: 'gems_50', name: 'Gem Collector', desc: 'Collect 50 gems in one day', icon: '💎', type: 'daily_gems', target: 50, reward: 30 },
   { id: 'gems_100', name: 'Gem Master', desc: 'Collect 100 gems in one day', icon: '💍', type: 'daily_gems', target: 100, reward: 65 },
   { id: 'theme_unlock', name: 'Fashion Statement', desc: 'Unlock a new theme', icon: '🎨', type: 'theme_unlock', target: 1, reward: 40 },
@@ -6297,6 +6316,18 @@ function updateDailyChallenge(type, value, extraData = {}) {
         case 'ultra_win':
           if (gameMode === 'ultra' && extraData.win) completed = true;
           break;
+        case 'timeattack_play':
+          if (gameMode === 'timeattack') completed = true;
+          break;
+        case 'timeattack_apples':
+          if (gameMode === 'timeattack') {
+            dailyChallengeState.progress[challengeId] = (dailyChallengeState.progress[challengeId] || 0) + value;
+            if (dailyChallengeState.progress[challengeId] >= challenge.target) completed = true;
+          }
+          break;
+        case 'timeattack_score':
+          if (gameMode === 'timeattack' && value >= challenge.target) completed = true;
+          break;
         case 'daily_gems':
           dailyChallengeState.progress[challengeId] = (dailyChallengeState.progress[challengeId] || 0) + value;
           if (dailyChallengeState.progress[challengeId] >= challenge.target) completed = true;
@@ -6315,7 +6346,7 @@ function updateDailyChallenge(type, value, extraData = {}) {
           break;
         case 'all_modes':
           if (extraData.mode) playedModesToday.add(extraData.mode);
-          if (playedModesToday.has('normal') && playedModesToday.has('ultra')) completed = true;
+          if (playedModesToday.has('normal') && playedModesToday.has('ultra') && playedModesToday.has('timeattack') && playedModesToday.has('triple')) completed = true;
           break;
         case 'use_code':
           completed = true;
@@ -6506,6 +6537,9 @@ function saveStats() {
 
 function updateStats(gameScore) {
   stats.gamesPlayed++;
+  if (gameMode === 'timeattack' && gameScore > stats.timeAttackBest) {
+    stats.timeAttackBest = gameScore;
+  }
   if (gameScore > stats.maxScore) {
     stats.maxScore = gameScore;
   }
@@ -6522,7 +6556,11 @@ function updateStats(gameScore) {
 
   // Update daily challenges
   updateDailyChallenge('games', 1);
-  updateDailyChallenge('score', gameScore);
+  if (gameMode === 'timeattack') {
+    updateDailyChallenge('timeattack_score', gameScore);
+  } else {
+    updateDailyChallenge('score', gameScore);
+  }
   updateDailyChallenge('total_gems', 0);
   updateDailyChallenge('streak', 0);
 }
@@ -6584,6 +6622,7 @@ function returnToMenu() {
   els.winScreen.classList.remove('show');
   els.start.classList.add('show');
   canvas.classList.remove('visible');
+  els.timeAttack.style.display = 'none';
 
   snake = [];
   foods = [];
@@ -6621,7 +6660,15 @@ els.modeSelect.addEventListener('change', (e) => {
         els.modeSelect.value = gameMode;
         sfx.playTone(800, 'sine', 0.2, 0.15);
         setTimeout(() => sfx.playTone(1200, 'sine', 0.3, 0.15), 100);
-        showNotification(`🍎🍎🍎 Triple Apple Mode Unlocked!`);
+        if (selectedMode === 'timeattack') {
+          showNotification('⏱️ Time Attack Mode Unlocked!');
+        } else if (selectedMode === 'triple') {
+          showNotification('🍎🍎🍎 Triple Apple Mode Unlocked!');
+        } else if (selectedMode === 'quintuple') {
+          showNotification('🍎×5 Five Apple Mode Unlocked!');
+        } else if (selectedMode === 'ultra') {
+          showNotification('🍎 Ultra Mode Unlocked!');
+        }
       } else {
         // Revert to previous mode
         els.modeSelect.value = gameMode;
@@ -6640,9 +6687,14 @@ els.modeSelect.addEventListener('change', (e) => {
   localStorage.setItem('snakeGameMode', gameMode);
   updateHighScoreDisplay();
 
-  if (gameMode === 'normal') els.score.textContent = `Score: 0`;
-  else if (gameMode === 'triple') els.score.textContent = `Score: 0`;
-  else els.score.textContent = `Left: 397`;
+  if (gameMode === 'normal' || gameMode === 'triple' || gameMode === 'quintuple') {
+    els.score.textContent = `Score: 0`;
+  } else if (gameMode === 'timeattack') {
+    els.score.textContent = `Score: 0`;
+    els.timeAttack.style.display = 'block';
+  } else {
+    els.score.textContent = `Left: 397`;
+  }
 });
 
 els.difficultySelect.addEventListener('change', (e) => {
@@ -6839,7 +6891,55 @@ const themeDisplayNames = {
   nintendo64: 'Nintendo 64',
   playstation1: 'PlayStation 1',
   dreamcast: 'Sega Dreamcast',
-  stpatricksday: '🍀 St. Patrick\'s Day'
+  stpatricksday: '🍀 St. Patrick\'s Day',
+  pastel1: 'Arctic Ocean',
+  pastel2: 'Australian Green',
+  pastel3: 'Crimson Purple',
+  pastel4: 'Moldy CheeseBurger',
+  pastel5: 'Human Skin',
+  pastel6: 'Night In Paris',
+  pastel7: 'Hungry Green',
+  pastel8: 'Moldy Fries',
+  pastel9: 'Crimson Red',
+  pastel10: 'Mendles Pink',
+  pastel11: 'Ice Queen',
+  pastel12: 'Stupid Green',
+  pastel13: 'Crimson Violet',
+  pastel14: 'Moldy Combo',
+  pastel15: 'Pig Skin',
+  pastel16: 'Two Face',
+  pastel17: 'Harmonica Green',
+  pastel18: 'Burger King',
+  pastel19: 'Hart',
+  pastel20: 'Valentines Day',
+  pastel21: 'Ice King',
+  pastel22: 'Starving Green',
+  pastel23: 'Purple Wine',
+  pastel24: 'Sonic',
+  pastel25: 'Lungs',
+  pastel26: 'Kenji',
+  pastel27: 'Pineapple Green',
+  pastel28: 'Hughies',
+  pastel29: 'Liver',
+  pastel30: 'Mothers Day',
+  pastel31: 'Night In Japan',
+  pastel32: 'Liquid Acid',
+  pastel33: 'Dead Happiness',
+  pastel34: 'Moldy Banana',
+  pastel35: 'Albino',
+  pastel36: 'Midnight in Hawaii',
+  pastel37: 'Raining Jungle',
+  pastel38: 'Sonic Burger',
+  pastel39: 'Fathers Day',
+  pastel40: 'Dead Pink',
+  pastel41: 'Turquoise',
+  pastel42: 'Raining Acid',
+  pastel44: 'Texas 1790',
+  pastel45: 'Orangutan',
+  pastel46: 'Comic 1922',
+  pastel47: 'Minecraft Jungle',
+  pastel48: 'Moldy Sonic Burger',
+  pastel49: 'Archive'
 };
 
 // Helper to generate display names for themes without explicit names
@@ -6990,6 +7090,8 @@ function updateHighScoreDisplay() {
     els.highScore.textContent = `Best: ${hs[currentDifficulty]}`;
   } else if (gameMode === 'ultra') {
     els.highScore.textContent = `Best: ${hsUltra[currentDifficulty]} Left`;
+  } else if (gameMode === 'timeattack') {
+    els.highScore.textContent = `Best: ${hsTimeAttack[currentDifficulty]}`;
   }
 }
 
@@ -7074,6 +7176,15 @@ function initGame() {
   currentGameGems = 0;
   gameStartTime = Date.now();
 
+  // Reset Time Attack timer
+  if (gameMode === 'timeattack') {
+    timeAttackTimer = 60;
+    els.timeAttack.style.display = 'block';
+    els.timeAttack.textContent = `⏱️ ${timeAttackTimer}`;
+  } else {
+    els.timeAttack.style.display = 'none';
+  }
+
   updateHighScoreDisplay();
   placeFood();
   updateScore(0);
@@ -7095,6 +7206,8 @@ function initGame() {
     updateDailyChallenge('ultra_play', 0);
   } else if (gameMode === 'triple') {
     updateDailyChallenge('triple_play', 0);
+  } else if (gameMode === 'timeattack') {
+    updateDailyChallenge('timeattack_play', 0);
   } else {
     updateDailyChallenge('difficulty', 0, { difficulty: currentDifficulty });
     updateDailyChallenge('score_difficulty', 0, { difficulty: currentDifficulty });
@@ -7192,6 +7305,17 @@ function update(dt) {
     if(p.life <= 0) particles.splice(i, 1);
   });
 
+  // Time Attack mode - countdown timer
+  if (gameMode === 'timeattack' && gameState === 'playing') {
+    timeAttackTimer -= dt * 0.001;
+    if (timeAttackTimer <= 0) {
+      timeAttackTimer = 0;
+      gameOver();
+      return;
+    }
+    els.timeAttack.textContent = `⏱️ ${Math.ceil(timeAttackTimer)}`;
+  }
+
   if (gameState !== 'playing') return;
 
   dropCounter += dt;
@@ -7246,6 +7370,17 @@ function step() {
       if (foods.length === 0) {
         gameWin();
       }
+    } else if (gameMode === 'timeattack') {
+      // Time Attack mode: +3 seconds per apple
+      timeAttackTimer += 3;
+      if (timeAttackTimer > 99) timeAttackTimer = 99;
+      const gemsEarned = GEM_REWARDS_TIMEATTACK[currentDifficulty];
+      gems += gemsEarned;
+      currentGameGems += gemsEarned;
+      dailyGemsCollected += gemsEarned;
+      updateGemDisplay();
+      placeFood();
+      updateDailyChallenge('timeattack_apples', 1);
     }
 
     updateScore(score);
@@ -7307,6 +7442,13 @@ function updateScore(s) {
       localStorage.setItem(`snakeHS_Ultra_${currentDifficulty}`, applesLeft);
       updateHighScoreDisplay();
     }
+  } else if (gameMode === 'timeattack') {
+    els.score.textContent = `Score: ${s}`;
+    if (s > hsTimeAttack[currentDifficulty]) {
+      hsTimeAttack[currentDifficulty] = s;
+      localStorage.setItem(`snakeHS_TimeAttack_${currentDifficulty}`, s);
+      updateHighScoreDisplay();
+    }
   }
 }
 
@@ -7318,8 +7460,10 @@ function gameOver() {
 
   if (gameMode === 'normal' || gameMode === 'triple' || gameMode === 'quintuple') {
     els.finalScore.textContent = `Score: ${score}`;
-  } else {
+  } else if (gameMode === 'ultra') {
     els.finalScore.textContent = `Eaten: ${score}  |  Left: ${foods.length}`;
+  } else if (gameMode === 'timeattack') {
+    els.finalScore.textContent = `Score: ${score}  |  Time: ${Math.ceil(timeAttackTimer)}s`;
   }
 
   // Track survival time
