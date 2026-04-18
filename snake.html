@@ -702,7 +702,7 @@ body.retro-theme .preview-item {
           <option value="ultra">🍎 Ultra - 10,000 💎</option>
           <option value="quintuple">🍎×5 Five Apple - 2,500 💎</option>
           <option value="triple">🍎🍎🍎 Triple Apple - 1,000 💎</option>
-          <option value="timeattack">⏱️ Time Attack - 1,000,000 💎</option>
+          <option value="timeattack">⏱️ Time Attack - 100,000 💎</option>
         </select>
       </div>
 
@@ -5766,7 +5766,7 @@ const DIFFICULTY_COSTS = { medium: 50, hard: 250 };
 
 // Game Mode Unlock System
 let unlockedModes = JSON.parse(localStorage.getItem('snakeUnlockedModes')) || ['normal'];
-const MODE_COSTS = { ultra: 10000, quintuple: 2500, triple: 1000, timeattack: 1000000 };
+const MODE_COSTS = { ultra: 10000, quintuple: 2500, triple: 1000, timeattack: 100000 };
 
 let currentDifficulty = localStorage.getItem('snakeDifficulty') || 'easy';
 
