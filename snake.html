@@ -668,7 +668,7 @@ body.retro-theme .preview-item {
 <div class="main-container">
   <div class="ui-layer">
     <div id="scoreEl">Score: 0</div>
-    <div id="timeAttackEl" style="display: none; color: #ff6b6b;">⏱️ 60</div>
+    <div id="timeAttackEl" style="display: none; color: #ff6b6b;">⏱️ 10</div>
     <div id="highScoreEl">Best: 0</div>
   </div>
 
@@ -5709,7 +5709,7 @@ let particles = [];
 let direction = { x: 0, y: 0 };
 let nextDirection = { x: 0, y: 0 };
 let score = 0;
-let timeAttackTimer = 60;
+let timeAttackTimer = 10;
 let lastTime = 0;
 let dropCounter = 0;
 let gameState = 'start';
@@ -7178,7 +7178,7 @@ function initGame() {
 
   // Reset Time Attack timer
   if (gameMode === 'timeattack') {
-    timeAttackTimer = 60;
+    timeAttackTimer = 10;
     els.timeAttack.style.display = 'block';
     els.timeAttack.textContent = `⏱️ ${timeAttackTimer}`;
   } else {
@@ -7345,7 +7345,17 @@ function step() {
     y: snake[0].y + direction.y
   };
 
-  if (head.x < 0 || head.x >= GRID_SIZE || head.y < 0 || head.y >= GRID_SIZE || snake.some(s => s.x === head.x && s.y === head.y)) {
+  if (gameMode === 'timeattack') {
+    if (head.x < 0) head.x = GRID_SIZE - 1;
+    else if (head.x >= GRID_SIZE) head.x = 0;
+    if (head.y < 0) head.y = GRID_SIZE - 1;
+    else if (head.y >= GRID_SIZE) head.y = 0;
+  } else if (head.x < 0 || head.x >= GRID_SIZE || head.y < 0 || head.y >= GRID_SIZE) {
+    gameOver();
+    return;
+  }
+
+  if (snake.some(s => s.x === head.x && s.y === head.y)) {
     gameOver();
     return;
   }
@@ -7384,11 +7394,6 @@ function step() {
       // Time Attack mode: +3 seconds per apple
       timeAttackTimer += 3;
       if (timeAttackTimer > 99) timeAttackTimer = 99;
-      const gemsEarned = GEM_REWARDS_TIMEATTACK[currentDifficulty];
-      gems += gemsEarned;
-      currentGameGems += gemsEarned;
-      dailyGemsCollected += gemsEarned;
-      updateGemDisplay();
       placeFood();
       updateDailyChallenge('timeattack_apples', 1);
     }
