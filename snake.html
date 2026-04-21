@@ -668,7 +668,7 @@ body.retro-theme .preview-item {
 <div class="main-container">
   <div class="ui-layer">
     <div id="scoreEl">Score: 0</div>
-    <div id="timeAttackEl" style="display: none; color: #ff6b6b;">⏱️ 10</div>
+    <div id="timeAttackEl" style="display: none; color: #ff6b6b;">⏱️ 5</div>
     <div id="highScoreEl">Best: 0</div>
   </div>
 
@@ -5709,7 +5709,7 @@ let particles = [];
 let direction = { x: 0, y: 0 };
 let nextDirection = { x: 0, y: 0 };
 let score = 0;
-let timeAttackTimer = 10;
+let timeAttackTimer = 5;
 let lastTime = 0;
 let dropCounter = 0;
 let gameState = 'start';
@@ -7178,7 +7178,7 @@ function initGame() {
 
   // Reset Time Attack timer
   if (gameMode === 'timeattack') {
-    timeAttackTimer = 10;
+    timeAttackTimer = 5;
     els.timeAttack.style.display = 'block';
     els.timeAttack.textContent = `⏱️ ${timeAttackTimer}`;
   } else {
@@ -7391,8 +7391,8 @@ function step() {
         gameWin();
       }
     } else if (gameMode === 'timeattack') {
-      // Time Attack mode: +3 seconds per apple
-      timeAttackTimer += 3;
+      // Time Attack mode: +2 seconds per apple
+      timeAttackTimer += 2;
       if (timeAttackTimer > 99) timeAttackTimer = 99;
       placeFood();
       updateDailyChallenge('timeattack_apples', 1);
