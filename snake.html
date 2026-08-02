@@ -4434,7 +4434,13 @@ function closeSettings() {
 }
 
 // Codes System
-const CODES = {};
+// Launch codes are case-insensitive and can each be redeemed once per device.
+const CODES = {
+  welcome: { gems: 25 },
+  launch: { gems: 50 },
+  itchio: { gems: 100 },
+  snake: { gems: 150 }
+};
 
 let usedCodes = safeParseJSON('snakeUsedCodes', []);
 
