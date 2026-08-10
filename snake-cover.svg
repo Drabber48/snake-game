@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <radialGradient id="bgGlow" cx="50%" cy="46%" r="80%">
+      <stop offset="0%" stop-color="#12123a"/>
+      <stop offset="45%" stop-color="#08081c"/>
+      <stop offset="100%" stop-color="#02020a"/>
+    </radialGradient>
+    <pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse">
+      <path d="M64 0H0V64" fill="none" stroke="#22d3ee" stroke-opacity="0.05" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.22"/>
+      <stop offset="60%" stop-color="#22d3ee" stop-opacity="0.07"/>
+      <stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="streakGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#22d3ee" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#67e8f9" stop-opacity="0.55"/>
+    </linearGradient>
+    <linearGradient id="titleGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d9fbff"/>
+      <stop offset="45%" stop-color="#67e8f9"/>
+      <stop offset="100%" stop-color="#0891b2"/>
+    </linearGradient>
+    <radialGradient id="appleGrad" cx="36%" cy="30%" r="85%">
+      <stop offset="0%" stop-color="#ff7a7a"/>
+      <stop offset="50%" stop-color="#e11d48"/>
+      <stop offset="100%" stop-color="#8f0f2e"/>
+    </radialGradient>
+    <linearGradient id="leafGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4ade80"/>
+      <stop offset="100%" stop-color="#15803d"/>
+    </linearGradient>
+    <radialGradient id="vignette" cx="50%" cy="50%" r="72%">
+      <stop offset="60%" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.55"/>
+    </radialGradient>
+    <filter id="titleGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="14" result="b1"/>
+      <feGaussianBlur stdDeviation="40" result="b2"/>
+      <feMerge>
+        <feMergeNode in="b2"/>
+        <feMergeNode in="b1"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softBlur">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+    <filter id="appleGlow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="22" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1024" height="1024" fill="url(#bgGlow)"/>
+  <rect width="1024" height="1024" fill="url(#grid)"/>
+
+  <circle cx="512" cy="512" r="430" fill="url(#centerGlow)"/>
+
+  <g filter="url(#softBlur)">
+    <path d="M120 512 L900 512" stroke="url(#streakGrad)" stroke-width="5" opacity="0.5"/>
+    <path d="M200 420 L860 420" stroke="url(#streakGrad)" stroke-width="3" opacity="0.35"/>
+    <path d="M240 608 L880 608" stroke="url(#streakGrad)" stroke-width="3" opacity="0.35"/>
+    <path d="M260 330 L820 330" stroke="url(#streakGrad)" stroke-width="2" opacity="0.25"/>
+    <path d="M280 700 L840 700" stroke="url(#streakGrad)" stroke-width="2" opacity="0.25"/>
+  </g>
+
+  <g transform="translate(855 255) rotate(-14)">
+    <circle cx="0" cy="0" r="150" fill="#ff2d55" opacity="0.35" filter="url(#softBlur)"/>
+    <g filter="url(#appleGlow)">
+      <path d="M0 -28 C -42 -86 -108 -64 -112 -2 C -116 64 -60 118 0 122 C 60 118 116 64 112 -2 C 108 -64 42 -86 0 -28 Z" fill="url(#appleGrad)"/>
+      <path d="M0 -30 C 6 -50 4 -60 -8 -70" fill="none" stroke="#78350f" stroke-width="10" stroke-linecap="round"/>
+      <path d="M-8 -62 C 10 -76 38 -78 54 -66 C 36 -52 10 -50 -8 -62 Z" fill="url(#leafGrad)"/>
+      <ellipse cx="-36" cy="-42" rx="30" ry="46" fill="#ffffff" opacity="0.35" transform="rotate(-24 -36 -42)"/>
+      <ellipse cx="-30" cy="-32" rx="12" ry="20" fill="#ffffff" opacity="0.5" transform="rotate(-24 -30 -32)"/>
+    </g>
+  </g>
+
+  <text x="512" y="448" text-anchor="middle" font-family="Arial Black, Helvetica Neue, Arial, sans-serif" font-weight="900" font-size="190" letter-spacing="10" fill="#22d3ee" opacity="0.85" filter="url(#titleGlow)">SNAKE</text>
+  <text x="512" y="448" text-anchor="middle" font-family="Arial Black, Helvetica Neue, Arial, sans-serif" font-weight="900" font-size="190" letter-spacing="10" fill="url(#titleGrad)">SNAKE</text>
+
+  <text x="512" y="642" text-anchor="middle" font-family="Arial Black, Helvetica Neue, Arial, sans-serif" font-weight="900" font-size="190" letter-spacing="10" fill="#22d3ee" opacity="0.85" filter="url(#titleGlow)">GAME</text>
+  <text x="512" y="642" text-anchor="middle" font-family="Arial Black, Helvetica Neue, Arial, sans-serif" font-weight="900" font-size="190" letter-spacing="10" fill="url(#titleGrad)">GAME</text>
+
+  <g>
+    <path d="M0 -10 C 1.5 -3 3 -1.5 10 0 C 3 1.5 1.5 3 0 10 C -1.5 3 -3 1.5 -10 0 C -3 -1.5 -1.5 -3 0 -10 Z" fill="#cffcff" transform="translate(150 200) scale(1.6)"/>
+    <path d="M0 -10 C 1.5 -3 3 -1.5 10 0 C 3 1.5 1.5 3 0 10 C -1.5 3 -3 1.5 -10 0 C -3 -1.5 -1.5 -3 0 -10 Z" fill="#a5f3fc" transform="translate(905 150) scale(1.1)"/>
+    <path d="M0 -10 C 1.5 -3 3 -1.5 10 0 C 3 1.5 1.5 3 0 10 C -1.5 3 -3 1.5 -10 0 C -3 -1.5 -1.5 -3 0 -10 Z" fill="#a5f3fc" transform="translate(700 830) scale(1.4)"/>
+    <path d="M0 -10 C 1.5 -3 3 -1.5 10 0 C 3 1.5 1.5 3 0 10 C -1.5 3 -3 1.5 -10 0 C -3 -1.5 -1.5 -3 0 -10 Z" fill="#cffcff" transform="translate(255 120) scale(0.8)"/>
+    <path d="M0 -10 C 1.5 -3 3 -1.5 10 0 C 3 1.5 1.5 3 0 10 C -1.5 3 -3 1.5 -10 0 C -3 -1.5 -1.5 -3 0 -10 Z" fill="#a5f3fc" transform="translate(955 470) scale(0.9)"/>
+  </g>
+
+  <g>
+    <circle cx="330" cy="240" r="5" fill="#e0feff" opacity="0.9"/>
+    <circle cx="210" cy="470" r="3.5" fill="#67e8f9" opacity="0.7"/>
+    <circle cx="140" cy="760" r="4.5" fill="#e0feff" opacity="0.8"/>
+    <circle cx="470" cy="830" r="3" fill="#67e8f9" opacity="0.6"/>
+    <circle cx="620" cy="120" r="4" fill="#e0feff" opacity="0.8"/>
+    <circle cx="790" cy="920" r="4.5" fill="#e0feff" opacity="0.75"/>
+    <circle cx="940" cy="650" r="3" fill="#67e8f9" opacity="0.65"/>
+    <circle cx="90" cy="330" r="2.5" fill="#67e8f9" opacity="0.55"/>
+    <circle cx="520" cy="950" r="3.5" fill="#e0feff" opacity="0.7"/>
+    <circle cx="860" cy="60" r="2.5" fill="#67e8f9" opacity="0.6"/>
+    <circle cx="720" cy="200" r="3" fill="#e0feff" opacity="0.55"/>
+    <circle cx="250" cy="920" r="2.5" fill="#67e8f9" opacity="0.6"/>
+  </g>
+
+  <rect width="1024" height="1024" fill="url(#vignette)"/>
+</svg>
